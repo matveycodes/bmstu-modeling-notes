@@ -1,0 +1,94 @@
+\ProvidesPackage{notes}
+
+\usepackage[
+    a4paper,
+    margin=2cm,
+    includehead,
+    headsep=\baselineskip,
+]{geometry}
+
+\usepackage[T2A]{fontenc}
+\usepackage{hyphenat}
+\usepackage[english, russian]{babel}
+
+\usepackage[
+    protrusion=true,
+    activate={true,nocompatibility},
+    final,
+    tracking=true,
+    kerning=true,
+    spacing=true,
+    factor=1100]{microtype}
+\SetTracking{encoding={*}, shape=sc}{40}
+
+\usepackage[bottom]{footmisc}
+\usepackage{etaremune}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{esvect}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\usepackage[skip=.625\baselineskip plus 2pt]{parskip}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{xurl}
+\usepackage{quoting}
+\usepackage{tikz}
+\usepackage{ifthen}
+\usepackage{caption}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+% Отключение префикса у подписей к рисункам
+\captionsetup[figure]{labelformat=empty}
+
+% Использование кириллических букв на втором уровне нумерованных списков
+\makeatletter
+\AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
+\makeatother
+\setlist[enumerate,2]{label={\asbuk*)}}
+
+% Отключение нумерации секций
+\makeatletter
+\renewcommand{\@seccntformat}[1]{%
+    \ifcsname prefix@#1\endcsname
+        \csname prefix@#1\endcsname
+    \else
+        \csname the#1\endcsname\quad
+    \fi}
+\newcommand\prefix@section{}
+\newcommand\prefix@subsection{}
+\newcommand\prefix@subsubsection{}
+\makeatother
+
+% Шапка
+\AtBeginDocument{
+    \pagestyle{fancy}
+    \renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+    \fancyhead{}
+    \fancyhead[L]{\leftmark}
+    \fancyhead[R]{\thepage}
+    \fancyfoot{}
+}
+
+\setlength{\headheight}{17.0pt}
+
+\newenvironment{dd}[1]{
+    \vskip.2\baselineskip
+    \begin{minipage}{\textwidth}
+        \begin{quoting}
+            \textbf{Определение}. #1}{
+        \end{quoting}
+    \end{minipage}
+    \vskip.2\baselineskip
+}
+
+\newcommand{\image}[3]{
+    \begin{figure}[!htb]
+        \centering
+        \includegraphics[width=#1]{#2}
+        \ifthenelse{\equal{#3}{}}{}{\caption{#3}}
+    \end{figure}
+}
