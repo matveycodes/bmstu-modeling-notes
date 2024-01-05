@@ -29,27 +29,32 @@
 \usepackage{esvect}
 \usepackage{mathtools}
 \usepackage{amssymb}
+\usepackage[hidelinks]{hyperref}
 \usepackage{siunitx}
 \usepackage[skip=.625\baselineskip plus 2pt]{parskip}
 \usepackage{enumitem}
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{xurl}
+\usepackage{blkarray}
 \usepackage{quoting}
 \usepackage{tikz}
-\usepackage{ifthen}
 \usepackage{caption}
 \usepackage{titlesec}
 \usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{ifthen}
+\usepackage{subcaption}
 
-% Отключение префикса у подписей к рисункам
-\captionsetup[figure]{labelformat=empty}
+\counterwithin{figure}{section}
+\counterwithin{equation}{section}
 
 % Использование кириллических букв на втором уровне нумерованных списков
 \makeatletter
 \AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
 \makeatother
 \setlist[enumerate,2]{label={\asbuk*)}}
+\renewcommand\thesubfigure{\asbuk{subfigure}}
 
 % Отключение нумерации секций
 \makeatletter
@@ -62,6 +67,21 @@
 \newcommand\prefix@section{}
 \newcommand\prefix@subsection{}
 \newcommand\prefix@subsubsection{}
+\makeatother
+
+\makeatletter
+\let\latexl@section\l@section
+\def\l@section#1#2{\begingroup\let\numberline\@gobble\latexl@section{#1}{#2}\endgroup}
+\makeatother
+
+\makeatletter
+\let\latexl@subsection\l@subsection
+\def\l@subsection#1#2{\begingroup\let\numberline\@gobble\latexl@subsection{#1}{#2}\endgroup}
+\makeatother
+
+\makeatletter
+\let\latexl@subsubsection\l@subsubsection
+\def\l@subsubsection#1#2{\begingroup\let\numberline\@gobble\latexl@subsubsection{#1}{#2}\endgroup}
 \makeatother
 
 % Шапка
@@ -91,5 +111,6 @@
         \centering
         \includegraphics[width=#1]{#2}
         \ifthenelse{\equal{#3}{}}{}{\caption{#3}}
+        \label{img:#2}
     \end{figure}
 }
