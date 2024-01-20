@@ -48,6 +48,12 @@
 
 \counterwithin{figure}{section}
 \counterwithin{equation}{section}
+\counterwithin{table}{section}
+
+% Избегание разрыва страницы перед списком
+\makeatletter
+\@beginparpenalty=10000
+\makeatother
 
 % Использование кириллических букв на втором уровне нумерованных списков
 \makeatletter
@@ -100,7 +106,7 @@
     \vskip.2\baselineskip
     \begin{minipage}{\textwidth}
         \begin{quoting}
-            \textbf{Определение}. #1}{
+            \textbf{Определение}.\kern4pt#1}{
         \end{quoting}
     \end{minipage}
     \vskip.2\baselineskip
